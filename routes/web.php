@@ -14,3 +14,7 @@
 Route::get('/', function () {
     return view('welcome');
 });
+
+Route::group(['prefix' => 'DNSLookUp'], function () {
+    Route::get('/namaDNS', 'DNSController@a');
+});
