@@ -24,4 +24,19 @@ class DNSController extends Controller
         
         
     }
+    
+    public function ab($id){
+        
+        // $dns = new Dns('google.com');
+        // // $dns = new Spatie\Dns\Dns('google.com');
+
+        // $dns->getRecords(); // returns all available dns records
+
+        // dd($dns);
+
+        $data = dns_get_record($id, DNS_ANY);
+        return response()->json($data);
+        
+        
+    }
 }
