@@ -36,7 +36,9 @@ class ExampleTest extends TestCase
         $response->assertStatus(200);
     }
 
-    public function test(){
+    public function test_DNS(){
 
+        $result = $this->get('/DNSLookUp/namaDNS');
+        $result->assertOk();
     }
 }
