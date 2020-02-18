@@ -19,8 +19,9 @@ class DNSController extends Controller
 
         // dd($dns);
 
-        $data = dns_get_record("www.matamerah.com", DNS_A + DNS_SOA);
-        return response()->json($data);
+        // $data = dns_get_record("www.matamerah.com", DNS_A + DNS_SOA);
+        // return response()->json($data);
+        
         
         
     }
