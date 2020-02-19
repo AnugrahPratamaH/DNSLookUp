@@ -10,34 +10,28 @@ use Spatie\Dns\Exceptions\InvalidArgument;
 class DNSController extends Controller
 {
     
-    public function a(){
+    public function check_dns(Request $request){
+
+        $this->validate($request,[
+            'domain'    => [ 'required','regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/']
+        ]);
+
+        $data_req = $request->input();
+        $id = $data_req['domain']; 
         
-        // $dns = new Dns('google.com');
+        // $dns = new Dns($id);
         // // $dns = new Spatie\Dns\Dns('google.com');
 
         // $dns->getRecords(); // returns all available dns records
 
         // dd($dns);
+    
+        $data = dns_get_record($id, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
+        // $data = dns_get_record($id, DNS_ALL);   
+        return response()->json($data);
 
-        // $data = dns_get_record("www.matamerah.com", DNS_A + DNS_SOA);
-        // return response()->json($data);
-        
         
         
     }
     
-    public function ab($id){
-        
-        // $dns = new Dns('google.com');
-        // // $dns = new Spatie\Dns\Dns('google.com');
-
-        // $dns->getRecords(); // returns all available dns records
-
-        // dd($dns);
-
-        $data = dns_get_record($id, DNS_ANY);
-        return response()->json($data);
-        
-        
-    }
 }

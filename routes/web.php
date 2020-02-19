@@ -12,10 +12,12 @@
 */
 
 Route::get('/', function () {
-    return view('form');
+    return view('welcome');
 });
 
 Route::group(['prefix' => 'DNSLookUp'], function () {
-    Route::get('/namaDNS', 'DNSController@a');
-    Route::get('/namaDNS/{id}', 'DNSController@ab');
+    Route::get('/', function () {
+        return view('inputDNS');
+    });
+    Route::post('/namaDNS', 'DNSController@check_dns');
 });
