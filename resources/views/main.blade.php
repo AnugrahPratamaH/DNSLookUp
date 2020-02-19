@@ -15,7 +15,7 @@
     
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
-<div class="flex flex-col">
+<!-- <div class="flex flex-col">
     @if(Route::has('login'))
         <div class="absolute top-0 right-0 mt-4 mr-4">
             @auth
@@ -27,13 +27,11 @@
                 @endif
             @endauth
         </div>
-    @endif
+    @endif -->
 
     @include('header')
-    <div class="min-h-full flex items-center justify-center mt-40">
-        
-           @yield('input')
-       
+    <div class="min-h-full flex items-center justify-center">
+           @yield('view') 
     </div>
 </div>
 </body>
