@@ -15,8 +15,8 @@
     
 </head>
 <body class="bg-gray-100 h-screen antialiased leading-none">
-<!-- <div class="flex flex-col">
-    @if(Route::has('login'))
+<div class="flex flex-col">
+    <!-- @if(Route::has('login'))
         <div class="absolute top-0 right-0 mt-4 mr-4">
             @auth
                 <a href="{{ url('/home') }}" class="no-underline hover:underline text-sm font-normal text-teal-800 uppercase">{{ __('Home') }}</a>
@@ -30,9 +30,9 @@
     @endif -->
 
     @include('header')
-    <div class="min-h-full flex items-center justify-center">
+    <div class="min-h-full flex items-center justify-center mt-12">
            @yield('view') 
     </div>
-</div>
+    </div>
 </body>
 </html>
