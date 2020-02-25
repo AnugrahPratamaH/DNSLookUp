@@ -1,6 +1,6 @@
 <IfModule mod_rewrite.c>
     <IfModule mod_negotiation.c>
-        DirectoryIndex index.html index.php
+        DirectoryIndex index.php
     </IfModule>
 
     RewriteEngine On
