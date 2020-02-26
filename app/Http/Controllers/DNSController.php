@@ -27,34 +27,34 @@ class DNSController extends Controller
         
         if(!empty($get_cache)){
 
-        // $dns = new Dns($id);
-        // // // // $dns = new Spatie\Dns\Dns('google.com');
+        $dns = new Dns($id);
+        // // // $dns = new Spatie\Dns\Dns('google.com');
 
-        // $dns->getRecords(); // returns all available dns records
+        $dns->getRecords(); // returns all available dns records
 
-        // dd($dns);
+        dd($dns);
 
-        $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-        // $data = dns_get_record($id, DNS_ALL);   
-        // return response()->json($data);
-        echo "udah ada cache";
+        // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
+        // // $data = dns_get_record($id, DNS_ALL);   
+        // // return response()->json($data);
+        // echo "udah ada cache";
         
            
         }else{
             $value_cache = Cache::add($keyCache, $value, now()->addMinutes(5));
             $get_cache = Cache::get($keyCache);
 
-            // $dns = new Dns($id);
-            // // // // $dns = new Spatie\Dns\Dns('google.com');
+            $dns = new Dns($id);
+            // // // $dns = new Spatie\Dns\Dns('google.com');
 
-            // $dns->getRecords(); // returns all available dns records
+            $dns->getRecords(); // returns all available dns records
 
-            // dd($dns);
+            dd($dns);
 
-                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-                // $data = dns_get_record($id, DNS_ALL);   
-                // return response()->json($data);
-                echo "buat cache baru";
+                // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
+                // // $data = dns_get_record($id, DNS_ALL);   
+                // // return response()->json($data);
+                // echo "buat cache baru";
         }
      
         // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)
