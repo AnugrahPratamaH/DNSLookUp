@@ -3,9 +3,6 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use Spatie\Dns\Dns;
-use Spatie\Dns\Exceptions\CouldNotFetchDns;
-use Spatie\Dns\Exceptions\InvalidArgument;
 use Illuminate\Support\Facades\Cache;
 
 class DNSController extends Controller
