@@ -44,7 +44,7 @@ class DNSController extends Controller
             $value_cache = Cache::add($keyCache, $value, now()->addMinutes(5));
             $get_cache = Cache::get($keyCache);
 
-            $dns = new Dns($id);
+            $dns = new Spatie\Dns\Dns($id);
             // // // $dns = new Spatie\Dns\Dns('google.com');
 
             $dns->getRecords(); // returns all available dns records
