@@ -31,12 +31,13 @@ class DNSController extends Controller
 
         $dns->getRecords();
 
-        dd($dns);
+        return response()->json($dns);
 
         // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
         // // $data = dns_get_record($id, DNS_ALL);   
         // return response()->json($data);
         // echo "udah ada cache";
+            // CNAME SRV TXT DNSKEY CAA NAPTR
         
            
         }else{
@@ -46,8 +47,8 @@ class DNSController extends Controller
             $dns = new Dns($id);
 
 
-            $dns->getRecords(); // returns all available dns records
-            dd($dns);
+            $dns->getRecords();
+            return response()->json($dns); // returns all available dns records
 
                 // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
                 // // $data = dns_get_record($id, DNS_ALL);   
@@ -58,6 +59,8 @@ class DNSController extends Controller
         // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)
         
     }
+
+
 
 
 }
