@@ -30,7 +30,8 @@ class DNSController extends Controller
         $dns = new Dns($id);
         // // // $dns = new Spatie\Dns\Dns('google.com');
 
-        $dns->getRecords(); // returns all available dns records
+        $dns->getRecords();
+        $dns->getRecords(['A', 'MX']); // returns all available dns records
 
         dd($dns);
 
