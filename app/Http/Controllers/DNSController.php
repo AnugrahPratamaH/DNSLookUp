@@ -27,15 +27,15 @@ class DNSController extends Controller
         
         if(!empty($get_cache)){
 
-        $dns = new Dns($id);
+        // $dns = new Dns($id);
 
-        $dns->getRecords();
+        // $dns->getRecords();
 
-        return response()->json($dns);
+        // return response()->json($dns);
 
-        // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-        // // $data = dns_get_record($id, DNS_ALL);   
-        // return response()->json($data);
+        $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
+        // $data = dns_get_record($id, DNS_ALL);   
+        return response()->json($data);
         // echo "udah ada cache";
             // CNAME SRV TXT DNSKEY CAA NAPTR
         
@@ -44,15 +44,15 @@ class DNSController extends Controller
             $value_cache = Cache::add($keyCache, $value, now()->addMinutes(5));
             $get_cache = Cache::get($keyCache);
 
-            $dns = new Dns($id);
+            // $dns = new Dns($id);
 
 
-            $dns->getRecords();
-            return response()->json($dns); // returns all available dns records
+            // $dns->getRecords();
+            // return response()->json($dns); // returns all available dns records
 
-                // $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-                // // $data = dns_get_record($id, DNS_ALL);   
-                // return response()->json($data);
+                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
+                // $data = dns_get_record($id, DNS_ALL);   
+                return response()->json($data);
                 // echo "buat cache baru";
         }
      
