@@ -31,7 +31,11 @@ class DNSController extends Controller
                 // $dns->getRecords();
                 // return response()->json($dns);
 
-                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);   
+                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);
+                
+                if(empty($data)){
+                    return view('notfound');
+                }
 
                 return view('viewDNS')->with(['data'    => $data]);
 
@@ -48,8 +52,9 @@ class DNSController extends Controller
                 // return response()->json($dns); // returns all available dns records
 
                     $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);  
-                
-                    // return response()->json($data);
+                    if(empty($data)){
+                        return view('notfound');
+                    }
                     return view('viewDNS')->with(['data'    => $data]);
             }
      
