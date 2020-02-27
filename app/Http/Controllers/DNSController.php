@@ -25,42 +25,37 @@ class DNSController extends Controller
        
         $get_cache = Cache::get($keyCache);
         
-        if(!empty($get_cache)){
+            if(!empty($get_cache)){
 
-        // $dns = new Dns($id);
+                // $dns = new Dns($id);
+                // $dns->getRecords();
+                // return response()->json($dns);
 
-        // $dns->getRecords();
+                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);   
 
-        // return response()->json($dns);
+                return view('viewDNS')->with(['data'    => $data]);
 
-        $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-        // $data = dns_get_record($id, DNS_ALL);   
-        return response()->json($data);
-        // echo "udah ada cache";
-            // CNAME SRV TXT DNSKEY CAA NAPTR
+                    // CNAME SRV TXT DNSKEY CAA NAPTR
         
            
-        }else{
-            $value_cache = Cache::add($keyCache, $value, now()->addMinutes(5));
-            $get_cache = Cache::get($keyCache);
+            }else{
 
-            // $dns = new Dns($id);
+                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(10));
+                $get_cache = Cache::get($keyCache);
 
+                // $dns = new Dns($id);
+                // $dns->getRecords();
+                // return response()->json($dns); // returns all available dns records
 
-            // $dns->getRecords();
-            // return response()->json($dns); // returns all available dns records
-
-                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA);   
-                // $data = dns_get_record($id, DNS_ALL);   
-                return response()->json($data);
-                // echo "buat cache baru";
-        }
+                    $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);  
+                
+                    // return response()->json($data);
+                    return view('viewDNS')->with(['data'    => $data]);
+            }
      
         // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)
         
     }
-
-
 
 
 }

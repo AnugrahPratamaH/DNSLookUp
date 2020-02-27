@@ -2,76 +2,166 @@
 
 @section('view')
 
-    <div class="w-4/5 mt-3">
-        <div class="bg-blue-200 rounded-md px-8 pt-6 pb-8 mb-5">
-            <div class="m-2">
-                <p class="text-red-700 font-bold text-2xl mb-2">Matamerah.com</p>
-                <button class="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    Whois
-                </button>
-                <button class="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    DNS Records
-                </button>
-                <button class="bg-white hover:bg-blue-500 text-blue-700 font-semibold hover:text-white py-2 px-4 border border-blue-500 hover:border-transparent rounded">
-                    Diagnostics
-                </button>
+<div class="container w-full mx-auto pt-8">
+
+    <div class="w-full px-4 md:px-0 md:mt-8 mb-16 text-gray-800 leading-normal">
+
+    <!--Console Content-->
+
+        <div class="flex flex-wrap">
+            <div class="w-full">
+                <div class="mx-1">
+                    <p class="text-red-600 font-bold text-2xl">{{ $data[0]['host']}}</p>
+                </div>
+            <!--Metric Card-->
+            <!-- <div class="bg-white border rounded shadow p-2">
+                <div class="flex flex-row items-center">
+                    <div class="flex-shrink pr-4">
+                        <div class="rounded p-3 bg-green-600"><i class="fa fa-wallet fa-2x fa-fw fa-inverse"></i></div>
+                    </div>
+                    <div class="flex-1 text-right md:text-center">
+                        <h5 class="font-bold uppercase text-gray-500">Total Revenue</h5>
+                        <h3 class="font-bold text-3xl">$3249 <span class="text-green-500"><i class="fas fa-caret-up"></i></span></h3>
+                    </div>
+                </div>
+            </div> -->
+            <!--/Metric Card-->
             </div>
+        
         </div>
-        <table class="w-full border-2 rounded-xl">
-            <thead >
-                <tr class="bg-gray-500">
-                    <th class="px-4 py-2 text-left text-xl">DNS Records for matamerah.com</th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                    <th></th>
-                </tr>
-                <tr class="bg-gray-300">
-                    <th class="px-4 py-2">Host Name</th>
-                    <th class="px-4 py-2">Type</th>
-                    <th class="px-4 py-2">TTL</th>
-                    <th class="px-4 py-2">Priority</th>
-                    <th class="px-4 py-2">Content</th>
-                </tr>
-            </thead>
-            <tbody class="bg-gray-300">
-                <tr>
-                    <td class="border px-4 py-2">matamerah.com</td>
-                    <td class="border px-4 py-2">SOA</td>
-                    <td class="border px-4 py-2">3599</td>
-                    <td class="border px-4 py-2">23</td>
-                    <td class="border px-4 py-2">coco.ns.cloudflare.com dns@cloudflare.com 2033321517 10000 2400 604800 3600</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">matamerah.com</td>
-                    <td class="border px-4 py-2">NS</td>
-                    <td class="border px-4 py-2">121599</td>
-                    <td class="border px-4 py-2">44</td>
-                    <td class="border px-4 py-2">coco.ns.cloudflare.com</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">matamerah.com</td>
-                    <td class="border px-4 py-2">NS</td>
-                    <td class="border px-4 py-2">21599</td>
-                    <td class="border px-4 py-2">30</td>
-                    <td class="border px-4 py-2">coco.ns.cloudflare.com</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">matamerah.com</td>
-                    <td class="border px-4 py-2">NS</td>
-                    <td class="border px-4 py-2">21599</td>
-                    <td class="border px-4 py-2">40</td>
-                    <td class="border px-4 py-2">2606:4700:3031::6812:2703</td>
-                </tr>
-                <tr>
-                    <td class="border px-4 py-2">matamerah.com</td>
-                    <td class="border px-4 py-2">NS</td>
-                    <td class="border px-4 py-2">21599</td>
-                    <td class="border px-4 py-2">30</td>
-                    <td class="border px-4 py-2">2606:4700:3031::6812:2703</td>
-                </tr>
-            </tbody>
-        </table>
+
+    <!--Divider-->
+        <hr class="border-b-2 border-gray-400 mt-4 mb-2 mx-1">
+
+        <div class="flex flex-row flex-wrap flex-grow mt-2">
+
+
+            <div class="w-full py-3 px-1">
+            <!--Table Card-->
+                <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
+                    <thead class="text-white">
+                        @foreach ($data as $item)
+                        <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                            <th class="p-3 text-left">Hostname</th>
+                            <th class="p-3 text-left">Type</th>
+                            <th class="p-3 text-left" width="110px">TTL</th>
+                            <th class="p-3 text-left" width="110px">Priority</th>
+                            <th class="p-3 text-left" width="110px">Content</th>
+                        </tr>
+                        
+                            
+                        @endforeach
+                        {{-- <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                            <th class="p-3 text-left">Hostname</th>
+                            <th class="p-3 text-left">Type</th>
+                            <th class="p-3 text-left" width="110px">TTL</th>
+                            <th class="p-3 text-left" width="110px">Priority</th>
+                            <th class="p-3 text-left" width="110px">Content</th>
+                        </tr>
+                        <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                            <th class="p-3 text-left">Hostname</th>
+                            <th class="p-3 text-left">Type</th>
+                            <th class="p-3 text-left" width="110px">TTL</th>
+                            <th class="p-3 text-left" width="110px">Priority</th>
+                            <th class="p-3 text-left" width="110px">Content</th>
+                        </tr>
+                        <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
+                            <th class="p-3 text-left">Hostname</th>
+                            <th class="p-3 text-left">Type</th>
+                            <th class="p-3 text-left" width="110px">TTL</th>
+                            <th class="p-3 text-left" width="110px">Priority</th>
+                            <th class="p-3 text-left" width="110px">Content</th>
+                        </tr> --}}
+                    </thead>
+                    <tbody class="flex-1 sm:flex-none">
+                        @foreach ($data as $item_dns)
+                        <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                            <td class="border-grey-light border hover:bg-gray-100 p-3">{{$item_dns['host']}}</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['type']}}</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ttl']}}</td>
+                            @if ($item_dns['type'] == "MX")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['pri']}}</td>
+                            @else
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate"></td>
+                            @endif
+                            @if ($item_dns['type'] == "A")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ip']}}</td>    
+                            @endif       
+                            @if ($item_dns['type'] == "NS")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
+                            @endif
+                            @if ($item_dns['type'] == "SOA")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+                                {{$item_dns['mname']." ".$item_dns['rname']." ".$item_dns['serial']." ".$item_dns['refresh']." ".
+                                    $item_dns['retry']." ".$item_dns['expire']." ".$item_dns['minimum-ttl']}}
+                            </td>
+                            @endif
+                            @if ($item_dns['type'] == "MX")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
+                            @endif
+                            @if ($item_dns['type'] == "AAAA")
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ipv6']}}</td>
+                            @endif
+                        </tr>
+                        @endforeach
+                        {{-- <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                            <td class="border-grey-light border hover:bg-gray-100 p-3">Matamerah.com</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">SOA</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">3559</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">20</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">coco.ns.cloudflare.com dns@cloudflare.com</td>
+                        </tr>
+                        <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                            <td class="border-grey-light border hover:bg-gray-100 p-3">Matamerah.com</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">SOA</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">3559</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">20</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">coco.ns.cloudflare.com dns@cloudflare.com</td>
+                        </tr>
+                        <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                        <td class="border-grey-light border hover:bg-gray-100 p-3">Matamerah.com</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">SOA</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">3559</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">20</td>
+                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">coco.ns.cloudflare.com dns@cloudflare.com</td>
+                        </tr> --}}
+                    </tbody>
+                </table>
+            <!--/table Card-->
+            </div>
+
+
+        </div>
+
+    <!--/ Console Content-->
+
     </div>
+
+</div>
+
+<style>
+  html,
+  body {
+    height: 100%;
+  }
+
+  @media (min-width: 640px) {
+    table {
+      display: inline-table !important;
+    }
+
+    thead tr:not(:first-child) {
+      display: none;
+    }
+  }
+
+  td:not(:last-child) {
+    border-bottom: 0;
+  }
+
+  th:not(:last-child) {
+    border-bottom: 2px solid rgba(0, 0, 0, .1);
+  }
+</style>
 
 @endsection
