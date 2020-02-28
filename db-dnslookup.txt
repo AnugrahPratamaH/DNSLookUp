@@ -1,0 +1,9 @@
+Username: pgo2UTCETt
+
+Database name: pgo2UTCETt
+
+Password: RBMS8GzIZx
+
+Server: remotemysql.com
+
+Port: 3306

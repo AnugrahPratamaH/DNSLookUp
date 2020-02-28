@@ -14,6 +14,10 @@
 Route::get('/', function () {
     return view('inputDNS');
 });
+Route::post('/', 'DNSController@check_dns');
+Route::get('/viewDNS', function () {
+    return view('viewDNS');
+});
 
 Route::group(['prefix' => 'DNSLookUp'], function () {
     Route::get('/', function () {
@@ -22,8 +26,6 @@ Route::group(['prefix' => 'DNSLookUp'], function () {
     Route::get('/viewDNS', function () {
         return view('viewDNS');
     });
-    Route::post('/namaDNS', 'DNSController@check_dns');
-    Route::get('/checkCache', 'DNSController@check_cache');
-    Route::get('/lookCache', 'DNSController@look_cache');
+    Route::post('/', 'DNSController@check_dns');
 
 });

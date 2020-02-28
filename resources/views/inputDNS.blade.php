@@ -2,7 +2,7 @@
 
 @section('input')
 <div class="w-full max-w-xl pt-16">
-  <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-3" id="form" method="post" action="/DNSLookUp/namaDNS" >
+  <form class="bg-white shadow-lg rounded px-8 pt-6 pb-8 mb-3" id="form" method="POST" action="/DNSLookUp/" >
     @if (count($errors) > 0)
                             <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
                                 <ul>
