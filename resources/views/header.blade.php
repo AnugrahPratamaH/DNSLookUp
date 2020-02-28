@@ -14,7 +14,7 @@
                 <li class="mr-6 my-2 md:my-0"></li>
                 <li class="mr-6 my-2 md:my-0"></li>
             </ul>
-            <form action="/DNSLookUp/" method="POST" >
+            <form action="/DNSLookUp/namaDNS" method="POST" >
             <div class="relative pull-right pl-4 pr-4 md:pr-0">
             <input type="hidden" name="_token" value ="{{ csrf_token() }}"> 
                 <input type="search" placeholder="Search For Domains..." class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal"
