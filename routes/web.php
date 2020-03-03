@@ -27,6 +27,7 @@ Route::group(['prefix' => 'DNSLookUp'], function () {
         return view('viewDNS');
     });
     Route::post('/namaDNS', 'DNSController@check_dns');
+    Route::get('/namaDNS/{id}', 'DNSController@checkdns_now');
 
 });
 
