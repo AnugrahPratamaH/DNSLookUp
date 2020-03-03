@@ -11,7 +11,13 @@
         <div class="flex flex-wrap">
             <div class="w-full">
                 <div class="mx-1">
-                    <p class="text-red-600 font-bold text-2xl">{{ $data[0]['host']}}</p>
+                    <p class="text-red-600 font-bold text-2xl mb-1">{{ $data[0]['domain']}}</p>
+                    <button class="bg-white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
+                        Last Modify
+                    </button>
+                    <button class="bg-white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
+                        Check Now
+                    </button>
                 </div>
             <!--Metric Card-->
             <!-- <div class="bg-white border rounded shadow p-2">
@@ -40,70 +46,49 @@
             <!--Table Card-->
                 <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
                     <thead class="text-white">
-                        @foreach ($data as $item)
                         <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
                             <th class="p-3 text-left">Hostname</th>
-                            <th class="p-3 text-left">Type</th>
+                            <th class="p-3 text-left" width="110px">Type</th>
                             <th class="p-3 text-left" width="110px">TTL</th>
                             <th class="p-3 text-left" width="110px">Priority</th>
                             <th class="p-3 text-left" width="110px">Content</th>
-                        </tr>
-                        
-                            
-                        @endforeach
-                        {{-- <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-                            <th class="p-3 text-left">Hostname</th>
-                            <th class="p-3 text-left">Type</th>
-                            <th class="p-3 text-left" width="110px">TTL</th>
-                            <th class="p-3 text-left" width="110px">Priority</th>
-                            <th class="p-3 text-left" width="110px">Content</th>
-                        </tr>
-                        <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-                            <th class="p-3 text-left">Hostname</th>
-                            <th class="p-3 text-left">Type</th>
-                            <th class="p-3 text-left" width="110px">TTL</th>
-                            <th class="p-3 text-left" width="110px">Priority</th>
-                            <th class="p-3 text-left" width="110px">Content</th>
-                        </tr>
-                        <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
-                            <th class="p-3 text-left">Hostname</th>
-                            <th class="p-3 text-left">Type</th>
-                            <th class="p-3 text-left" width="110px">TTL</th>
-                            <th class="p-3 text-left" width="110px">Priority</th>
-                            <th class="p-3 text-left" width="110px">Content</th>
-                        </tr> --}}
+                        </tr>                 
                     </thead>
+                    @foreach ($data as $item_domain)
                     <tbody class="flex-1 sm:flex-none">
-                        @foreach ($data as $item_dns)
-                        <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
-                            <td class="border-grey-light border hover:bg-gray-100 p-3">{{$item_dns['host']}}</td>
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['type']}}</td>
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ttl']}}</td>
-                            @if ($item_dns['type'] == "MX")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['pri']}}</td>
-                            @else
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate"></td>
-                            @endif
-                            @if ($item_dns['type'] == "A")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ip']}}</td>    
-                            @endif       
-                            @if ($item_dns['type'] == "NS")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
-                            @endif
-                            @if ($item_dns['type'] == "SOA")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
-                                {{$item_dns['mname']." ".$item_dns['rname']." ".$item_dns['serial']." ".$item_dns['refresh']." ".
-                                    $item_dns['retry']." ".$item_dns['expire']." ".$item_dns['minimum-ttl']}}
-                            </td>
-                            @endif
-                            @if ($item_dns['type'] == "MX")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
-                            @endif
-                            @if ($item_dns['type'] == "AAAA")
-                            <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ipv6']}}</td>
-                            @endif
-                        </tr>
+                        @foreach ($item_domain->records as $item_records)
+                            <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
+                                <td class="border-grey-light border hover:bg-gray-100 p-3">{{$item_domain->domain}}</td>
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->type}}</td>
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->ttl}}</td>
+                                @if ($item_records->priority != 0)
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->priority}}</td>
+                                @else
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate"></td>
+                                @endif
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->content}}</td>
+                                {{-- @if ($item_dns['type'] == "A")
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ip']}}</td>    
+                                @endif       
+                                @if ($item_dns['type'] == "NS")
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
+                                @endif
+                                @if ($item_dns['type'] == "SOA")
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">
+                                    {{$item_dns['mname']." ".$item_dns['rname']." ".$item_dns['serial']." ".$item_dns['refresh']." ".
+                                        $item_dns['retry']." ".$item_dns['expire']." ".$item_dns['minimum-ttl']}}
+                                </td>
+                                @endif
+                                @if ($item_dns['type'] == "MX")
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['target']}}</td>
+                                @endif
+                                @if ($item_dns['type'] == "AAAA")
+                                <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_dns['ipv6']}}</td>
+                                @endif --}}
+                            </tr>
+                            @endforeach
                         @endforeach
+                     
                         {{-- <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
                             <td class="border-grey-light border hover:bg-gray-100 p-3">Matamerah.com</td>
                             <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">SOA</td>

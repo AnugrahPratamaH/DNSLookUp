@@ -29,3 +29,5 @@ Route::group(['prefix' => 'DNSLookUp'], function () {
     Route::post('/namaDNS', 'DNSController@check_dns');
 
 });
+
+Route::get('/json', 'DNSController@jeson');
