@@ -39,6 +39,8 @@ class DNSController extends Controller
                 return view('viewDNS')->with(['data'    => $data]);
 
                     // CNAME SRV TXT DNSKEY CAA NAPTR
+                
+                   
         
            
             }else{

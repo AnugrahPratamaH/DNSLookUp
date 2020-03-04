@@ -48,6 +48,7 @@
             <div class="w-full py-3 px-1">
             <!--Table Card-->
             @foreach ($data as $item_domain)
+            @foreach ($item_domain->records as $item_records)
                 <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
                     <thead class="text-white">
                         <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
@@ -60,7 +61,7 @@
                     </thead>
                    
                     <tbody class="flex-1 sm:flex-none">
-                        @foreach ($item_domain->records as $item_records)
+                      
                             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
                                 <td class="border-grey-light border hover:bg-gray-100 p-3">{{$item_domain->domain}}</td>
                                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->type}}</td>
