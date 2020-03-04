@@ -96,6 +96,7 @@
   body {
     height: 100%;
   }
+ 
 
   @media (min-width: 640px) {
     table {
