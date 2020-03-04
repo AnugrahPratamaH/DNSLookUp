@@ -26,111 +26,129 @@ class DNSController extends Controller
         $get_cache = Cache::get($keyCache);
         
             if(!empty($get_cache)){
-
-                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);
                 
-                if(empty($data)){
-                    return view('notfound');
-                }
-             
-                $data = domain::where('domain', $get_cache)
+                $data_domain = domain::where('domain', $get_cache)
                 ->with(['records'])->get();
-                
-                return view('viewDNS')->with(['data'    => $data]);
+                $data_record = record::where('domain_id', $data_domain[0]->id)
+                                ->get();
+             
+                return view('viewDNS')->with(['data'    => $data_domain,
+                                            'data_record'   =>$data_record]);
 
                     // CNAME SRV TXT DNSKEY CAA NAPTR
                 
-                   
-        
            
             }else{
 
-                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(10));
+                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(180));
                 $get_cache = Cache::get($keyCache);
 
-
-                    $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);  
-                    if(empty($data)){
-                        return view('notfound');
-                    }else{
 
                          $searchDNS = domain::where('domain',$get_cache)->get();
 
                             if (count($searchDNS) != 0) {
-                                $data = domain::where('domain', $get_cache)
+                                 $data = domain::where('domain', $get_cache)
                                 ->with(['records'])->get();
-                                
-                                 return view('viewDNS')->with(['data'    => $data]);
+
+                                $data_record = record::where('domain_id', $data[0]->id)
+                                                ->get();
+
+                             return view('viewDNS')->with(['data'    => $data,
+                                                'data_record'   =>$data_record]);
                                
                             }else{
-                                 $domain = domain::create([  'domain'        => $data[0]['host'],
-                                                            'last_update'   => Carbon::now()->format('Y:m:d H:i:s')
-                                                            ]);
-                                                
-                                $dns_record = domain::where('domain',$get_cache)->get();
-                      
-                                 foreach ($data as $dnsRecord) {
-                                    if($dnsRecord['type']   == "A"){
-                                        $inputrecord_A = record::create(['domain_id' => $dns_record[0]->id,
-                                                                        'type'      =>$dnsRecord['type'],
-                                                                        'ttl'       =>$dnsRecord['ttl'],
-                                                                        'content'   =>$dnsRecord['ip']]);
-  
-                                     }elseif($dnsRecord['type']   == "NS"){
-                                        $inputrecord_NS = record::create(['domain_id' =>$dns_record[0]->id,
-                                                                        'type'      =>$dnsRecord['type'],
-                                                                        'ttl'       =>$dnsRecord['ttl'],
-                                                                        'content'   =>$dnsRecord['target']]);
-
-                                    }elseif($dnsRecord['type']   == "SOA"){
-                                        $content =  $dnsRecord['mname']." ".$dnsRecord['rname']." ".$dnsRecord['serial']." ".
-                                                    $dnsRecord['refresh']." ".$dnsRecord['retry']." ".$dnsRecord['expire']." ".
-                                                    $dnsRecord['minimum-ttl'];
-
-                                        $inputrecord_SOA = record::create(['domain_id' => $dns_record[0]->id,
-                                                                        'type'      =>$dnsRecord['type'],
-                                                                        'ttl'       =>$dnsRecord['ttl'],
-                                                                        'content'   =>$content]);
-                                       
-                                    }elseif($dnsRecord['type']   == "MX"){
-                                        $inputrecord_MX = record::create(['domain_id' => $dns_record[0]->id,
-                                                                            'type'      => $dnsRecord['type'],
-                                                                            'ttl'       => $dnsRecord['ttl'],
-                                                                            'priority'  => $dnsRecord['pri'],
-                                                                            'content'    => $dnsRecord['target']]);
-                                    }elseif($dnsRecord['type']   == "AAAA"){
-                                        $inputrecord_MX = record::create(['domain_id' => $dns_record[0]->id,
-                                                                            'type'      => $dnsRecord['type'],
-                                                                            'ttl'       => $dnsRecord['ttl'],
-                                                                            'content'    => $dnsRecord['ipv6']]);
-                                    }
-                                }
-                                $data = domain::where('domain', $get_cache)
-                                        ->with(['records'])->get();
-                                        
-                               return view('viewDNS')->with(['data'    => $data]);
-                            }
-                    }
-                  
-                       
-            }
-     
-        // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)
-        
+                                return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
+                            }                        
+                                      
+            }   
+        // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)       
     }
+
+    public function store_dns($domain){
+
+        $data = dns_get_record($domain, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
+
+        
+             $domain_create = domain::create([  'domain'        => $data[0]['host'],
+                                         'last_update'   => Carbon::now()->format('Y:m:d H:i:s')
+                                    ]);
+                                                
+             $dns_record = domain::where('domain',$domain)->get();
+             
+                 foreach ($data as $dnsRecord) {
+                    if($dnsRecord['type']   == "A"){
+                     $inputrecord_A = record::create(['domain_id' => $dns_record[0]->id,
+                                                      'type'      => $dnsRecord['type'],
+                                                      'ttl'       => $dnsRecord['ttl'],
+                                                      'content'   => $dnsRecord['ip']]);
+  
+                    }elseif($dnsRecord['type']   == "NS"){
+                        $inputrecord_NS = record::create(['domain_id' => $dns_record[0]->id,
+                                                          'type'      => $dnsRecord['type'],
+                                                          'ttl'       => $dnsRecord['ttl'],
+                                                          'content'   => $dnsRecord['target']
+                                                          ]);
+
+                    }elseif($dnsRecord['type']   == "SOA"){
+                        $content =  $dnsRecord['mname']." ".$dnsRecord['rname']." ".$dnsRecord['serial']." ".
+                                     $dnsRecord['refresh']." ".$dnsRecord['retry']." ".$dnsRecord['expire']." ".
+                                     $dnsRecord['minimum-ttl'];
+
+                        $inputrecord_SOA = record::create(['domain_id' => $dns_record[0]->id,
+                                                           'type'      => $dnsRecord['type'],
+                                                           'ttl'       => $dnsRecord['ttl'],
+                                                           'content'   => $content
+                                                           ]);
+                                       
+                    }elseif($dnsRecord['type']   == "MX"){
+                        $inputrecord_MX = record::create(['domain_id' => $dns_record[0]->id,
+                                                          'type'      => $dnsRecord['type'],
+                                                          'ttl'       => $dnsRecord['ttl'],
+                                                          'priority'  => $dnsRecord['pri'],
+                                                          'content'    => $dnsRecord['target']
+                                                          ]);
+                    }elseif($dnsRecord['type']   == "AAAA"){
+                         $inputrecord_MX = record::create(['domain_id' => $dns_record[0]->id,
+                                                           'type'      => $dnsRecord['type'],
+                                                           'ttl'       => $dnsRecord['ttl'],
+                                                           'content'    => $dnsRecord['ipv6']
+                                                           ]);
+                        }
+                }
+                
+                $data_domain = domain::where('domain', $domain)
+                                 ->with(['records'])->get();
+               
+
+                $data_record = record::where('domain_id', $data_domain[0]->id)
+                                ->get();
+                
+                return view('viewDNS')->with(['data'    => $data_domain,
+                                                'data_record'   =>$data_record]);
+
+
+    }
+
 
     public function checkdns_now($domain){
 
-        $data = dns_get_record($domain, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);
+        $data_domain = domain::where('domain', $domain) 
+        ->get();
 
-       
+        $delete_lastrecord = record::where('domain_id', $data_domain[0]->id)
+            ->delete();
+        
+        return redirect()->action('DNSController@update_dns', ['domain' => $domain]);
+            
+    }
+
+    public function update_dns($domain){
+
+        $data = dns_get_record($domain, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME);
 
         $data_domain = domain::where('domain', $domain) 
                                 ->get();
 
-
-        $delete_lastrecord = record::where('domain_id', $data_domain[0]->id)
-                                    ->delete();
 
             foreach ($data as $dnsRecord) {
                 if($dnsRecord['type']   == "A"){
@@ -176,13 +194,21 @@ class DNSController extends Controller
 
              $data_record = domain::where('domain', $domain)
                             ->with(['records'])->get();
-
                                                 
             return view('viewDNS')->with(['data'    => $data_record]);
-            
+
     }
 
+    public function lastmodify_dns($domain){
+        
+       
+            $data_record = domain::where('domain', $domain)
+            ->with(['records'])->get();
+                                
+            return view('viewDNS')->with(['data'    => $data_record]);
+    }
 
+    
 
     public function jeson(){
 

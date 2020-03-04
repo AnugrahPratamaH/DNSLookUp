@@ -12,8 +12,8 @@
             <div class="w-full">
                 <div class="mx-1">
                     <p class="text-red-600 font-bold text-2xl mb-2">{{ $data[0]['domain']}}</p>
-                    <a href="/DNSLookUp/namaDNS/{{ $data[0]['domain']}}">
-                    <button class="bg-white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
+                    <a href="/DNSLookUp/lastModify/{{ $data[0]['domain']}}">
+                    <button class="bg-white active:bg-blue-700 text white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
                         Last Modify
                     </button></a>
                     <a href="/DNSLookUp/namaDNS/{{ $data[0]['domain']}}">
@@ -46,11 +46,10 @@
 
 
             <div class="w-full py-3 px-1">
-            <!--Table Card-->
-            @foreach ($data as $item_domain)
-            @foreach ($item_domain->records as $item_records)
-                <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">
-                    <thead class="text-white">
+            <!--Table Card-->          
+                <table class="w-full flex flex-row flex-no-wrap sm:bg-white rounded-lg overflow-hidden sm:shadow-lg my-5">             
+                 <thead class="text-white">   
+                    @foreach ($data as $item_domain)
                         <tr class="bg-teal-400 flex flex-col flex-no wrap sm:table-row rounded-l-lg sm:rounded-none mb-2 sm:mb-0">
                             <th class="p-3 text-left">Hostname</th>
                             <th class="p-3 text-left" width="110px">Type</th>
@@ -59,9 +58,10 @@
                             <th class="p-3 text-left" width="110px">Content</th>
                         </tr>                 
                     </thead>
-                   
-                    <tbody class="flex-1 sm:flex-none">
-                      
+                    @endforeach    
+                     <tbody class="flex-1 sm:flex-none">
+                        
+                        @foreach ($item_domain->records as $item_records)
                             <tr class="flex flex-col flex-no wrap sm:table-row mb-2 sm:mb-0">
                                 <td class="border-grey-light border hover:bg-gray-100 p-3">{{$item_domain->domain}}</td>
                                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->type}}</td>
@@ -73,11 +73,12 @@
                                 @endif
                                 <td class="border-grey-light border hover:bg-gray-100 p-3 truncate">{{$item_records->content}}</td>
                             </tr>
-                            @endforeach
-                        @endforeach
-                     
+                            @endforeach 
+                       
                     </tbody>
+                  
                 </table>
+              
             <!--/table Card-->
             </div>
 

@@ -10,6 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
+Auth::routes();
 
 Route::get('/', function () {
     return view('inputDNS');
@@ -28,7 +29,12 @@ Route::group(['prefix' => 'DNSLookUp'], function () {
     });
     Route::post('/namaDNS', 'DNSController@check_dns');
     Route::get('/namaDNS/{id}', 'DNSController@checkdns_now');
+    Route::get('/lastModify/{id}', 'DNSController@lastmodify_dns');
+    Route::get('/storeDNS/{domain}', 'DNSController@store_dns');
+    Route::get('/checknowDNS/{domain}', 'DNSController@update_dns');
+
+    
 
 });
 
-Route::get('/json', 'DNSController@jeson');
+Route::get('json', 'DNSController@jeson');
