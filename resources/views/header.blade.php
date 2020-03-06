@@ -16,6 +16,7 @@
             </ul>
             <div class="relative pull-right pl-3 pr-4 md:pr-0">
                 <form action="/DNSLookUp/namaDNS" method="POST">
+                    <input type="hidden" name="_token" id="{{ csrf_token() }}">    
                 <input type="search" placeholder="Search For Domains..." class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal"> 
                     <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
                         <svg class="fill-current pointer-events-none text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
