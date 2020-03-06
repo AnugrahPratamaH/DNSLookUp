@@ -26,6 +26,11 @@ class DNSController extends Controller
         $get_cache = Cache::get($keyCache);
         
             if(!empty($get_cache)){
+                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
+
+                if(count($data) == 0){
+                    return view('notfound');
+                }else{
                 
                 $data_domain = domain::where('domain', $get_cache)
                 ->with(['records'])->get();
@@ -36,6 +41,7 @@ class DNSController extends Controller
                                             'data_record'   =>$data_record]);
 
                     // CNAME SRV TXT DNSKEY CAA NAPTR
+                }
                 
            
             }else{
@@ -43,6 +49,11 @@ class DNSController extends Controller
                 $value_cache = Cache::add($keyCache, $value, now()->addSeconds(10));
                 $get_cache = Cache::get($keyCache);
 
+                $data_domen = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
+
+                if(count($data_domen) == 0){
+                    return view('notfound');
+                }else{
 
                          $searchDNS = domain::where('domain',$get_cache)->get();
 
@@ -58,7 +69,8 @@ class DNSController extends Controller
                                
                             }else{
                                 return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
-                            }                        
+                            } 
+                }                       
                                       
             }   
         // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)       
