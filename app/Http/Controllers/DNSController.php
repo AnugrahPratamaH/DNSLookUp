@@ -19,6 +19,9 @@ class DNSController extends Controller
 
         $data_req = $request->input();
         $id = $data_req['domain']; 
+        // echo $id;
+        // $data_domain = domain::where('domain',$id)->get();
+        // dd($data_domain);
 
         $keyCache = "DNS";
         $value = $id;
@@ -40,7 +43,7 @@ class DNSController extends Controller
            
             }else{
 
-                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(180));
+                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(10));
                 $get_cache = Cache::get($keyCache);
 
 
