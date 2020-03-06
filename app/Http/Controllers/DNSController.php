@@ -19,10 +19,7 @@ class DNSController extends Controller
 
         $data_req = $request->input();
         $id = $data_req['domain']; 
-        // echo $id;
-        // $data_domain = domain::where('domain',$id)->get();
-        // dd($data_domain);
-
+            
         $keyCache = "DNS";
         $value = $id;
        
@@ -71,7 +68,10 @@ class DNSController extends Controller
 
         $data = dns_get_record($domain, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
 
-        
+        if(count($data) == 0){
+            return view('notfound');
+        }else{
+
              $domain_create = domain::create([  'domain'        => $data[0]['host'],
                                          'last_update'   => Carbon::now()->format('Y:m:d H:i:s')
                                     ]);
@@ -128,6 +128,7 @@ class DNSController extends Controller
                 
                 return view('viewDNS')->with(['data'    => $data_domain,
                                                 'data_record'   =>$data_record]);
+            }
 
 
     }
