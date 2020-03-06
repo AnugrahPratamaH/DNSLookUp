@@ -16,7 +16,7 @@
                     <button class="bg-white active:bg-blue-700 text white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
                         Last Modify
                     </button></a>
-                    <a href="/DNSLookUp/namaDNS/{{ $data[0]['domain']}}">
+                    <a href="/DNSLookUp/checknow/{{ $data[0]['domain']}}">
                         <button class="bg-white hover:bg-blue-500 text-blue-700 text-sm font-semibold hover:text-white py-1 px-3 border border-blue-500 hover:border-transparent rounded">
                             Check Now
                         </button>
