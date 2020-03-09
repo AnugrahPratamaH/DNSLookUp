@@ -76,6 +76,72 @@ class DNSController extends Controller
         // 731ecec5deacc035e3472a3c49c4f0c438e561f410b58da8a7f7345158319f40 (no docker pas docker compose)       
     }
 
+    public function search_dns(Request $request){
+
+        $this->validate($request,[
+            'domain_search'    => [ 'required','regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/']
+        ]);
+
+        $data_req = $request->input();
+        $id = $data_req['domain_search']; 
+            
+        $keyCache = "DNS";
+        $value = $id;
+
+       
+        $get_cache = Cache::get($keyCache);
+        
+            if(!empty($get_cache)){
+                $data = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
+
+                if(count($data) == 0){
+                    return view('notfound');
+                }else{
+                
+                $data_domain = domain::where('domain', $get_cache)
+                ->with(['records'])->get();
+                $data_record = record::where('domain_id', $data_domain[0]->id)
+                                ->get();
+             
+                return view('viewDNS')->with(['data'    => $data_domain,
+                                            'data_record'   =>$data_record]);
+
+                    // CNAME SRV TXT DNSKEY CAA NAPTR
+                }
+                
+           
+            }else{
+
+                $value_cache = Cache::add($keyCache, $value, now()->addSeconds(10));
+                $get_cache = Cache::get($keyCache);
+
+                $data_domen = dns_get_record($get_cache, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 
+
+                if(count($data_domen) == 0){
+                    return view('notfound');
+                }else{
+
+                         $searchDNS = domain::where('domain',$get_cache)->get();
+
+                            if (count($searchDNS) != 0) {
+                                 $data = domain::where('domain', $get_cache)
+                                ->with(['records'])->get();
+
+                                $data_record = record::where('domain_id', $data[0]->id)
+                                                ->get();
+
+                             return view('viewDNS')->with(['data'    => $data,
+                                                'data_record'   =>$data_record]);
+                               
+                            }else{
+                                return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
+                            } 
+                }                       
+                                      
+            }   
+
+    }
+
     public function store_dns($domain){
 
         $data = dns_get_record($domain, DNS_A + DNS_AAAA + DNS_MX + DNS_NS + DNS_SOA + DNS_CNAME); 

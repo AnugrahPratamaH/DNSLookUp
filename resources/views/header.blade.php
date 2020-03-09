@@ -14,17 +14,29 @@
                 <li class="mr-6 my-2 md:my-0"></li>
                 <li class="mr-6 my-2 md:my-0"></li>
             </ul>
+            <form method="POST" action="/DNSLookUp/searchDNS" >
             <div class="relative pull-right pl-3 pr-4 md:pr-0">
-                <form action="/DNSLookUp/namaDNS" method="POST">
+                @if (count($errors) > 0)
+                <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                    <ul>
+                        @foreach ($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+                @endif
+
                     <input type="hidden" name="_token" value="{{ csrf_token()}}">    
                 <input type="search" placeholder="Search For Domains..." class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal"
-                name="domain"> 
+                name="domain_search" value="{{old('domain_search')}}">
                     <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">
                         <svg class="fill-current pointer-events-none text-gray-800 w-4 h-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
                             <path d="M12.9 14.32a8 8 0 1 1 1.41-1.41l5.35 5.33-1.42 1.42-5.33-5.34zM8 14A6 6 0 1 0 8 2a6 6 0 0 0 0 12z"></path>
                         </svg>
-                    </form>
+               
                     </div> 
+            </div>
+                </form>
             </div>
             <!-- <span class="relative w-full">
                     <input type="search" placeholder="Search" class="w-full bg-gray-800 text-sm text-white transition border border-transparent focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">
