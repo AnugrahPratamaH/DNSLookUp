@@ -21,7 +21,7 @@ class DNSController extends Controller
         $id = $data_req['domain']; 
             
         $keyCache = "DNS";
-        $value = $id;
+        $value = strtolower($id);
        
         $get_cache = Cache::get($keyCache);
         
@@ -86,7 +86,7 @@ class DNSController extends Controller
         $id = $data_req['domain_search']; 
             
         $keyCache = "DNS";
-        $value = $id;
+        $value = strtolower($id);
 
        
         $get_cache = Cache::get($keyCache);
