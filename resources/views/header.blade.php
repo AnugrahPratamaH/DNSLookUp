@@ -14,8 +14,7 @@
                 <li class="mr-6 my-2 md:my-0"></li>
                 <li class="mr-6 my-2 md:my-0"></li>
             </ul>
-            <form method="POST" action="/DNSLookUp/searchDNS">
-
+            
             <div class="relative pull-right pl-3 pr-4 md:pr-0">
                 @if (count($errors) > 0)
                 <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
@@ -26,7 +25,7 @@
                     </ul>
                 </div>
                 @endif
-
+                <form action="/DNSLookUp/searchDNS" method="get">
                     <input type="hidden" name="_token" value="{{ csrf_token()}}">    
                 <input type="search" placeholder="Search For Domains..." class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal"
                 name="domain_search" value="{{old('domain_search')}}">
@@ -36,8 +35,9 @@
                         </svg>
                
                     </div> 
+                </form>
             </div>
-        </form>
+        
             </div>
             <!-- <span class="relative w-full">
                     <input type="search" placeholder="Search" class="w-full bg-gray-800 text-sm text-white transition border border-transparent focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal">

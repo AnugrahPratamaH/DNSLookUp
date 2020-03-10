@@ -68,7 +68,7 @@ class DNSController extends Controller
                                                 'data_record'   =>$data_record]);
                                
                             }else{
-                                // return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
+                                return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
                             } 
                 }                       
                                       

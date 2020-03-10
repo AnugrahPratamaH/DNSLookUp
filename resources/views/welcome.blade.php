@@ -34,7 +34,7 @@
         </div>
     @endif -->
 
-    @include('hider')
+    @include('header')
     <div class="min-h-full flex items-center justify-center mt-40">
         
            @yield('input')
