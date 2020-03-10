@@ -12,9 +12,9 @@
 */
 Auth::routes();
 
-// Route::get('/', function () {
-//     return view('inputDNS');
-// });
+Route::get('/', function () {
+    return view('inputDNS');
+});
 // Route::post('/namaDNS', 'DNSController@check_dns');
 // Route::get('/viewDNS', function () {
 //     return view('viewDNS');
