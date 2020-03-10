@@ -29,7 +29,7 @@
         </div>
     @endif -->
 
-    @include('header')
+    @include('headerr')
     <div class="min-h-full flex items-center justify-center mt-12">
            @yield('view') 
     </div>

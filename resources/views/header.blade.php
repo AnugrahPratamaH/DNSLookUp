@@ -25,8 +25,7 @@
                     </ul>
                 </div>
                 @endif
-                <form action="/DNSLookUp/searchDNS" method="get">
-                    <input type="hidden" name="_token" value="{{ csrf_token()}}">    
+                <form action="/DNSLookUp/searchDNS" method="get">   
                 <input type="search" placeholder="Search For Domains..." class="w-full bg-gray-100 text-sm text-gray-800 transition border focus:outline-none focus:border-gray-700 rounded py-1 px-2 pl-10 appearance-none leading-normal"
                 name="domain_search" value="{{old('domain_search')}}">
                     <div class="absolute search-icon" style="top: 0.375rem;left: 1.75rem;">

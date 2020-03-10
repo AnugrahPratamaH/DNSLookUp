@@ -10,15 +10,15 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-// Auth::routes();
+Auth::routes();
 
-Route::get('/', function () {
-    return view('inputDNS');
-});
-Route::post('/namaDNS', 'DNSController@check_dns');
-Route::get('/viewDNS', function () {
-    return view('viewDNS');
-});
+// Route::get('/', function () {
+//     return view('inputDNS');
+// });
+// Route::post('/namaDNS', 'DNSController@check_dns');
+// Route::get('/viewDNS', function () {
+//     return view('viewDNS');
+// });
 
 Route::group(['prefix' => 'DNSLookUp'], function () {
     // Route::post('/namaDNS', 'DNSController@check_dns');
@@ -30,7 +30,8 @@ Route::group(['prefix' => 'DNSLookUp'], function () {
     Route::get('/checknowDNS/{domain}', 'DNSController@update_dns');
     Route::get('/', function () {
         return view('inputDNS');
-    });
+    })->name('/');
+    Route::get('user/profile', 'UserProfileController@show')->name('profile');
     Route::get('/viewDNS', function () {
         return view('viewDNS');
     });
