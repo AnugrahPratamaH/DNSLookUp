@@ -68,7 +68,7 @@ class DNSController extends Controller
                                                 'data_record'   =>$data_record]);
                                
                             }else{
-                                return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
+                                // return redirect()->action('DNSController@store_dns', ['domain' => $get_cache]);
                             } 
                 }                       
                                       
@@ -81,7 +81,7 @@ class DNSController extends Controller
         $this->validate($request,[
             'domain_search'    => [ 'required','regex:/^(https?:\/\/)?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/']
         ]);
-
+        
         $data_req = $request->input();
         $id = $data_req['domain_search']; 
             

@@ -17,7 +17,7 @@
 <body class="bg-gray-100 h-screen antialiased leading-none">
 <div class="flex flex-col">
 
-    @include('header')
+    @include('hider')
     <div class="min-h-full flex items-center justify-center mt-12">
            @yield('content') 
     </div>
